@@ -1,15 +1,10 @@
-package org.wildcodeschool.myblog.model;
+package org.mycodeschool.myblog.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 public class Article {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,7 +14,6 @@ public class Article {
     private LocalDateTime updatedAt;
 
     // Getters et setters
-
     public Long getId() {
         return id;
     }
@@ -58,5 +52,17 @@ public class Article {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
