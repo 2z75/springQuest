@@ -35,6 +35,45 @@ public class ArticleController {
         return ResponseEntity.ok(article);
     }
 
+    @GetMapping("/title/{title}")
+    public ResponseEntity<List<Article>> getArticlesByTitle(@PathVariable String title) {
+        List<Article> articles = articleRepository.findByTitle(title);
+        if (articles.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(articles);
+    }
+
+    @GetMapping("content/{content}")
+    public ResponseEntity<List<Article>> getArticlesByContent(@PathVariable String content) {
+        List<Article> articles = articleRepository.findByContentContaining(content);
+        if (articles.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(articles);
+    }
+
+    @GetMapping("/created-after/{date}")
+    public ResponseEntity<List<Article>> getArticlesCreatedAfter(@PathVariable LocalDateTime date) {
+        List<Article> articles = articleRepository.findByCreatedAtAfter(date);
+        if (articles.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(articles);
+    }
+
+    @GetMapping("/latest")
+    public ResponseEntity<List<Article>> getLatestArticles() {
+        List<Article> articles = articleRepository.findTop5ByOrderByCreatedAtDesc();
+        if (articles.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(articles);
+    }
+
+
+
+// CREATION
     @PostMapping
     public ResponseEntity<Article> createArticle(@RequestBody Article article) {
         article.setCreatedAt(LocalDateTime.now());
@@ -43,6 +82,9 @@ public class ArticleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedArticle);
     }
 
+
+
+// MODIFICATION
     @PutMapping("/{id}")
     public ResponseEntity<Article> updateArticle(@PathVariable Long id, @RequestBody Article articleDetails) {
         Article article = articleRepository.findById(id).orElse(null);
@@ -57,6 +99,9 @@ public class ArticleController {
         }
     }
 
+
+
+// SUPPRESSION
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteArticle(@PathVariable Long id) {
         Article article = articleRepository.findById(id).orElse(null);
