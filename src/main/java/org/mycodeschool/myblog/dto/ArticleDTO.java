@@ -1,16 +1,16 @@
 package org.mycodeschool.myblog.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ArticleDTO {
     private Long id;
     private String title;
     private String content;
-    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private Long categoryId;
+    private String categoryName;
 
-    // Getters et setters
+    private List<String> imageUrls;
 
     public Long getId() {
         return id;
@@ -36,14 +36,6 @@ public class ArticleDTO {
         this.content = content;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
@@ -52,11 +44,19 @@ public class ArticleDTO {
         this.updatedAt = updatedAt;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 }
